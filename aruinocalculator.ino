@@ -1,6 +1,15 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_TFTLCD.h>
 #include <TouchScreen.h>
+#include "assignnumber.h"
+#include "backspace.h"
+#include "buttonsetup.h"
+#include "calculate.h"
+#include "equationdisplay.h"
+#include "readnumber.h"
+#include "settingcolor.h"
+#include "settingtech.h"
+
 
 #define LCD_CS A3
 #define LCD_CD A2
@@ -8,7 +17,6 @@
 #define LCD_RD A0
 #define LCD_RESET A4
 
-// Color definitions
 #define BLACK       0x0000
 #define NAVY        0x000F
 #define DARKGREEN   0x03E0
