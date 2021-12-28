@@ -1,4 +1,4 @@
-python3 python/calculator.py
+time python3 python/calculator.py
 # FILE="addition"
 # nasm -f elf32 assembly/$FILE.asm -o assembly/$FILE.o
 # ld -m elf_i386 assembly/$FILE.o -o assembly/$FILE.exe

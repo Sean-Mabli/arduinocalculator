@@ -1,25 +1,33 @@
-input = '213432/1*1231*43274/4324' # input('expression: ').lower().strip().replace(' ', '')
+instr = input('expression: ').lower().strip().replace(' ', '')
 
-def joinit(iterable, delimiter):
-  it = iter(iterable)
-  yield next(it)
-  for x in it:
-    yield delimiter
-    yield x
+def emdas(input):
+  while input.count('^') > 0:
+    input = input[:input.index('^') - 1] + [str(float(input[input.index('^') - 1]) ** float(input[input.index('^') + 1]))] + input[input.index('^') + 2:]
 
-def seprate(instr):
-  input = [instr]
-  for i in ['+', '-', '*', '/']:
-    out = []
-    for j in input:
-      w = joinit(j.split(i), i)
-      out.extend(w)
-    input = out
-  return out
+  while input.count('*') > 0 or input.count('/') > 0:
+    if input.count('/') == 0 or (input.count('*') > 0 and input.index('*') < input.index('/')):
+      input = input[:input.index('*') - 1] + [str(float(input[input.index('*') - 1]) * float(input[input.index('*') + 1]))] + input[input.index('*') + 2:]
+    elif input.count('*') == 0 or (input.count('/') > 0 and input.index('/') < input.index('*')):
+      input = input[:input.index('/') - 1] + [str(float(input[input.index('/') - 1]) / float(input[input.index('/') + 1]))] + input[input.index('/') + 2:]
 
-input = seprate(input)
+  while input.count('+') > 0 or input.count('-') > 0:
+    if input.count('-') == 0 or (input.count('+') > 0 and input.index('+') < input.index('-')):
+      input = input[:input.index('+') - 1] + [str(float(input[input.index('+') - 1]) + float(input[input.index('+') + 1]))] + input[input.index('+') + 2:]
+    elif input.count('+') == 0 or (input.count('-') > 0 and input.index('-') < input.index('+')):
+      input = input[:input.index('-') - 1] + [str(float(input[input.index('-') - 1]) - float(input[input.index('-') + 1]))] + input[input.index('-') + 2:]
 
-while input.index('*') == -1 and input.index('/') == -1:
-  if 
-  input = input[:input.index('*') - 1] + [str(int(input[input.index('*') - 1]) * int(input[input.index('*') + 1]))] + input[input.index('*') + 2:]
-print(input)
+  return float(input[0])
+
+input = []
+for letter in instr:
+  if letter in ['+', '-', '*', '/', '^', '(', ')']:
+    if instr[: instr.find(letter)] != '':
+      input.append(instr[: instr.find(letter)])
+    input.append(letter)
+    instr = instr[instr.find(letter) + 1 : ]
+input.append(instr)
+
+while input.count('(') > 0:
+  input = input[: len(input) - input[::-1].index('(') - 1] + [str(emdas(input[len(input) - input[::-1].index('(') : input.index(')')]))] + input[input.index(')') + 1:]
+
+print(emdas(input))
